@@ -1,5 +1,5 @@
 {
-  "extends": ["react-important-stuff", "plugin:prettier/recommended"],
+  "extends": ["react-important-stuff", "plugin:prettier/recommended", "eslint:recommended", "plugin:react/recommended"],
   "parser": "@babel/eslint-parser",
   "parserOptions": {
     "requireConfigFile": false,
@@ -17,7 +17,16 @@
     "react/jsx-uses-vars": "error",
     "react/jsx-uses-react": "error",
     "react/jsx-props-no-spreading": "off",
-    "strict": 0
+    "strict": 0,
+    "react/display-name": ["off"],
+    "react/prop-types": "off",
+    "no-unused-vars": "off",
+    "react-hooks/rules-of-hooks": "off"
+  },
+  "settings": {
+    "react": {
+      "version": "detect"
+    }
   },
   "eslint.workingDirectories": ["./back", "./front"],
   "globals": {

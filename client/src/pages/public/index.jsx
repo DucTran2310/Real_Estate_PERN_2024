@@ -1,2 +1,6 @@
 export { default as Home } from './Home/Home'
 export { default as PublicLayout } from './PublicLayout/PublicLayout'
+export { default as AboutUs } from './AboutUs/AboutUs'
+export { default as OurAgents } from './OurAgents/OurAgents'
+export { default as Properties } from './Properties/Properties'
+export { default as Search } from './Search/Search'
