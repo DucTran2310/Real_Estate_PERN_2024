@@ -27,3 +27,8 @@ export const navigations = [
     text: 'SEARCH'
   }
 ]
+
+export const SIGN_IN = {
+  LOGIN: 'LOGIN',
+  REGISTER: 'REGISTER'
+}

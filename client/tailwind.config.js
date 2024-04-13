@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 /** @type {import('tailwindcss').Config} */
 export default {
   content: [
@@ -5,6 +6,9 @@ export default {
     "./index.html"
   ],
   theme: {
+    fontFamily: {
+      montserrat: ['Montserrat']
+    },
     extend: {
       backgroundColor: {
         "main-50": "#EDEFF6",
@@ -16,7 +20,10 @@ export default {
         "main-600": "#3B4D81",
         "main-700": "#2C3A61",
         "main-800": "#1E2640",
-        "main-900": "#0F1320"
+        "main-900": "#0F1320",
+        "overlay-30": "rgba(0,0,0,0.3)",
+        "overlay-50": "rgba(0,0,0,0.5)",
+        "overlay-70": "rgba(0,0,0,0.7)"
       },
       colors: {
         "main-50": "#EDEFF6",
@@ -35,5 +42,7 @@ export default {
       }
     },
   },
-  plugins: [],
+  plugins: [
+    require('@tailwindcss/forms'),
+  ],
 }
