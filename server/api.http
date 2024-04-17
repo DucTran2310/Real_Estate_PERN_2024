@@ -1,0 +1,5 @@
+### Register
+POST http://localhost:5001/api/auth/register
+Content-Type: application/json
+
+
