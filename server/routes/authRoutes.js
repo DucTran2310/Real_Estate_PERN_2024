@@ -10,10 +10,22 @@ router.post(
     Joi.object({ 
       password: stringReq,
       name: stringReq,
-      phone: numberReq
+      phone: numberReq,
+      role: stringReq
     })
   ), 
   authController.register
+)
+
+router.post(
+  '/signIn', 
+  validateDTO(
+    Joi.object({ 
+      phone: numberReq,
+      password: stringReq
+    })
+  ), 
+  authController.signIn
 ) 
 
 module.exports = router

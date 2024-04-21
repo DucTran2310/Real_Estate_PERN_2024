@@ -2,4 +2,18 @@
 POST http://localhost:5001/api/auth/register
 Content-Type: application/json
 
+{
+  "password": "12345",
+  "name": "Tran Anh Duc",
+  "phone": "0123456",
+  "role": "USER"
+}
 
+### SIGN IN
+POST http://localhost:5001/api/auth/signIn
+Content-Type: application/json
+
+{
+  "password": "12345",
+  "phone": "0123456"
+}
