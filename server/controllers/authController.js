@@ -6,7 +6,14 @@ const register = async function (req, res) {
   return response
 }
 
+const signIn = async function (req, res, next) {
+  const response = await authServices.signIn(req, res, next)
+
+  return response
+}
+
 
 module.exports = {
-  register
+  register,
+  signIn
 }
