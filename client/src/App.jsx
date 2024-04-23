@@ -1,14 +1,14 @@
 import { AboutUs, Home, OurAgents, Properties, PublicLayout, Search } from '@pages/public'
-import path from '@utils/path'
-import { Routes, Route } from 'react-router-dom'
-import { Modal } from './components'
 import { useAppStore } from '@store/useAppStore'
+import path from '@utils/path'
+import { Route, Routes } from 'react-router-dom'
+import { ToastContainer } from "react-toastify"
+import "react-toastify/dist/ReactToastify.css"
+import { Modal } from './components'
 
 function App() {
 
-  const {isShowModal, contentModal} = useAppStore()
-
-  console.log('isShowModal, contentModal', isShowModal, contentModal)
+  const { isShowModal } = useAppStore()
 
   return (
     <>
@@ -22,6 +22,18 @@ function App() {
           <Route path={path.SEARCH} element={<Search />} />
         </Route>
       </Routes>
+      <ToastContainer
+        position="top-center"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="colored"
+      />
     </>
   )
 }
