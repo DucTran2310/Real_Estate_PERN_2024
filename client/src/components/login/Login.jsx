@@ -1,22 +1,53 @@
+import { apiRegister, apiSignIn } from "@apis/auth"
 import InputForm from "@components/inputs/InputForm"
 import { SIGN_IN } from "@utils/constants"
 import clsx from "clsx"
 import { useEffect, useState } from "react"
 import { useForm } from "react-hook-form"
-import { Button } from ".."
+import { toast } from "react-toastify"
+import Swal from 'sweetalert2'
+import { Button, InputRadio } from ".."
+import { useAppStore } from "@store/useAppStore"
 
 const Login = () => {
 
   const [variant, setVariant] = useState(SIGN_IN.LOGIN)
   const { register, formState: { errors }, handleSubmit, reset } = useForm()
+  const { setModal } = useAppStore()
 
   useEffect(() => {
     reset()
-  }, [variant])
+  }, [reset, variant])
 
-  const onSubmit = (data) => {
-    console.log('DATA: ', data)
+  const onSubmit = async (data) => {
+    if (variant === SIGN_IN.REGISTER) {
+      const response = await apiRegister(data)
+      if (response.success) {
+        Swal.fire({
+          icon: "success",
+          title: "Congratulation",
+          text: response.toastMessage,
+          showConfirmButton: true,
+          confirmButtonText: "Go Sign In",
+        }).then(({ isConfirmed }) => {
+          if (isConfirmed) {
+            setVariant(SIGN_IN.LOGIN)
+          }
+        });
+      } else toast.error(response.toastMessage)
+    }
+
+    if (variant === SIGN_IN.LOGIN) {
+      const response = await apiSignIn(data)
+      if (response.success) {
+        toast.success(response?.toastMessage)
+        setModal(false, null)
+      } else {
+        toast.error(response.toastMessage)
+      }
+    }
   }
+
 
   return (
     <div
@@ -48,7 +79,13 @@ const Login = () => {
           type="number"
           id='phone'
           placeholder="Type your phone number here"
-          validate={{ required: "This field cannot empty." }}
+          validate={{
+            required: "This field cannot empty.",
+            pattern: {
+              value: /(|0[1|3|5|7|8|9])+([0-9]{8})\b/,
+              message: "Phone number invalid",
+            },
+          }}
           errors={errors}
         />
         <InputForm
@@ -74,6 +111,20 @@ const Login = () => {
             />
           )
         }
+        {variant === "REGISTER" && (
+          <InputRadio
+            label="Type account"
+            register={register}
+            id="role"
+            validate={{ required: "This field cannot empty." }}
+            optionClassname="grid grid-cols-3 gap-4"
+            errors={errors}
+            options={[
+              { label: 'User', value: 'USER' },
+              { label: 'Agent', value: 'AGENT' }
+            ]}
+          />
+        )}
         <Button
           className="py-2 my-6"
           onClick={handleSubmit(onSubmit)}
@@ -88,4 +139,4 @@ const Login = () => {
   )
 }
 
-export default Login 
+export default Login
