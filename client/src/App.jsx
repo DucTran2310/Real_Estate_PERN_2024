@@ -5,10 +5,17 @@ import { Route, Routes } from 'react-router-dom'
 import { ToastContainer } from "react-toastify"
 import "react-toastify/dist/ReactToastify.css"
 import { Modal } from './components'
+import { useUserStore } from '@store/useUserStore'
+import { useEffect } from 'react'
 
 function App() {
 
   const { isShowModal } = useAppStore()
+  const { getCurrent, token } = useUserStore()
+
+  useEffect(() => {
+    getCurrent()
+  }, [token])
 
   return (
     <>
@@ -34,6 +41,7 @@ function App() {
         pauseOnHover
         theme="colored"
       />
+
     </>
   )
 }

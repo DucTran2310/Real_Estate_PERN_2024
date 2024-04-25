@@ -7,14 +7,22 @@ const Button = (props) => {
     children,
     className,
     onClick,
-    type='button'
+    type='button',
+    disabled
   } = props
 
   return (
     <button 
       type={type}
       onClick={onClick}
-      className={twMerge(clsx('py-3 px-4 text-white bg-main-700 rounded-md', className))}
+      className={twMerge(
+        clsx(
+          'py-3 px-4 text-white bg-main-700 rounded-md flex justify-center items-center gap-3', 
+          className,
+          disabled && 'opacity-50'
+        )
+      )}
+      disabled={disabled}
     >
       {children}
     </button>
