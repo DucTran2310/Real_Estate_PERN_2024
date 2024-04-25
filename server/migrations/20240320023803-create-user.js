@@ -73,3 +73,4 @@ module.exports = {
 // BEFORE UPDATE ON Users
 // FOR EACH ROW
 // EXECUTE FUNCTION update_cdc_version();
+
