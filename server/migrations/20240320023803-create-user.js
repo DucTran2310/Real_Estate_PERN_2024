@@ -29,9 +29,13 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: false,
       },
-      role: {
-        type: Sequelize.ENUM(['ADMIN', 'AGENT', 'USER']),
-        defaultValue: 'USER'
+      roleCode: {
+        type: Sequelize.STRING,
+        references: {
+          model: 'Roles',
+          key: 'code'
+        },
+        allowNull: false,
       },
       avatar: {
         type: Sequelize.STRING
@@ -52,7 +56,7 @@ module.exports = {
     })
   },
 
-  async down(queryInterface, Sequeli ze) {
+  async down(queryInterface, Sequelize) {
     // Xóa bảng 'Users'
     await queryInterface.dropTable('Users')
   }
