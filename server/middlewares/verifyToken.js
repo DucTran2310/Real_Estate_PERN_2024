@@ -15,6 +15,33 @@ const verifyToken = (req, res, next) => {
   })
 }
 
+const isAgent = async (req, res, next) => {
+  const { roleCode } = req.user
+  if (roleCode !== "ROL1" || roleCode == "ROL3" || roleCode === "ROL5") {
+    return throwErrorWithStatus(401, "You do not have access", res, next)
+  }
+  next()
+}
+
+const isOwner = async (req, res, next) => {
+  const { roleCode } = req.user
+  if (roleCode !== "ROL1" || roleCode !== "ROL3") {
+    return throwErrorWithStatus(401, "You do not have access", res, next)
+  }
+  next()
+}
+
+const isAdmin = async (req, res, next) => {
+  const { roleCode } = req.user
+  if (roleCode !== "ROL1") {
+    return throwErrorWithStatus(401, "You do not have access", res, next)
+  }
+  next()
+}
+
 module.exports = {
-  verifyToken
+  verifyToken,
+  isAgent,
+  isAdmin,
+  isOwner,
 }
