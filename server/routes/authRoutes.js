@@ -1,6 +1,6 @@
 const router = require('express').Router()
 const authController = require('../controllers/authController')
-const { stringReq, numberReq } = require('../middlewares/joiSchema')
+const { stringReq, numberReq, string } = require('../middlewares/joiSchema')
 const validateDTO = require('../middlewares/validation')
 const Joi = require("joi")
 
@@ -11,7 +11,7 @@ router.post(
       password: stringReq,
       name: stringReq,
       phone: numberReq,
-      role: stringReq
+      roleCode: string
     })
   ), 
   authController.register
