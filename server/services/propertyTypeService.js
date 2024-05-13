@@ -105,41 +105,7 @@ const getPropertyTypesServices = asyncHandler(async (req, res) => {
     success: response.length > 0,
     toastMessage: response.length > 0 ? "GGot propertyTypes successfully" : "Cannot get propertyTypes",
     propertyTypes: response,
-  });
-
-  // sorting
-  // if (sort) {
-  //   const order = sort
-  //     .split(",")
-  //     .map((el) =>
-  //       el.startsWith("-") ? [el.replace("-", ""), "DESC"] : [el, "ASC"]
-  //     );
-
-  //   options.order = order;
-  // }
-  // const filter = {
-  //   where: query,
-  //   ...options,
-  // };
-  // if (!limit) {
-  //   const keys = generateKeyRedis(filter);
-  //   const alreadyGetAll = await redis.get(keys);
-  //   if (alreadyGetAll)
-  //     return res.json({
-  //       success: true,
-  //       mes: "Got",
-  //       propertyTypes: JSON.parse(alreadyGetAll),
-  //     });
-  //   const response = await db.PropertyType.findAll({ ...filter });
-  //   redis.set(keys, JSON.stringify(response));
-  //   redis.expireAt(keys, parseInt(+new Date() / 1000) + 86400); //24h
-
-  //   return res.json({
-  //     success: response.length > 0,
-  //     mes: response.length > 0 ? "Got" : "Cannot get propertyTypes",
-  //     propertyTypes: response,
-  //   });
-  // }
+  })
 })
 
 const updatePropertyTypesServices = asyncHandler(async (req, res, next) => {

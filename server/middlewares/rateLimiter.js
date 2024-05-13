@@ -8,32 +8,32 @@ const rateLimiter = async (req, res, next) => {
   const client = await redis.hGetAll(`rateLimit-${clientId}`)
 
   if (Object.keys(client).length === 0) {
-    await redis.hSet(`rateLimit-${clientId}`, "createdAt", currentTime);
-    await redis.hSet(`rateLimit-${clientId}`, "count", 1);
-    redis.expireAt(`rateLimit-${clientId}`, parseInt(+new Date() / 1000) + 600); //20s
+    await redis.hSet(`rateLimit-${clientId}`, "createdAt", currentTime)
+    await redis.hSet(`rateLimit-${clientId}`, "count", 1)
+    redis.expireAt(`rateLimit-${clientId}`, parseInt(+new Date() / 1000) + 600) //20s
 
-    return next();
+    return next()
   }
-  let difference = (currentTime - client.createdAt) / 1000;
+  let difference = (currentTime - client.createdAt) / 1000
 
   if (difference > process.env.RATE_LIMIT_RESET) {
-    await redis.hSet(`rateLimit-${clientId}`, "createdAt", currentTime);
-    await redis.hSet(`rateLimit-${clientId}`, "count", 1);
-    redis.expireAt(`rateLimit-${clientId}`, parseInt(+new Date() / 1000) + 600);
+    await redis.hSet(`rateLimit-${clientId}`, "createdAt", currentTime)
+    await redis.hSet(`rateLimit-${clientId}`, "count", 1)
+    redis.expireAt(`rateLimit-${clientId}`, parseInt(+new Date() / 1000) + 600)
 
-    return next();
+    return next()
   }
   if (client.count > process.env.RATE_LIMIT_COUNT) {
     return res.status(429).json({
       error: true,
       success: false,
-      toastMessage: "Do not spam!!!",
-    });
+      toastMessage: "Do not spam!!!"
+    })
   } else {
-    await redis.hSet(`rateLimit-${clientId}`, "count", +client.count + 1);
-    redis.expireAt(`rateLimit-${clientId}`, parseInt(+new Date() / 1000) + 600);
+    await redis.hSet(`rateLimit-${clientId}`, "count", +client.count + 1)
+    redis.expireAt(`rateLimit-${clientId}`, parseInt(+new Date() / 1000) + 600)
 
-    return next();
+    return next()
   }
 
 }
