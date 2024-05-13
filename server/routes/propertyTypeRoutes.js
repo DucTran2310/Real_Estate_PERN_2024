@@ -3,7 +3,10 @@ const Joi = require("joi");
 const propertyTypeController = require("../controllers/propertyTypeController");
 const validateDto = require("../middlewares/validation");
 const { verifyToken, isAdmin } = require("../middlewares/verifyToken");
-const { stringReq, string } = require('../middlewares/joiSchema')
+const { stringReq, string } = require('../middlewares/joiSchema');
+const rateLimiter = require("../middlewares/rateLimiter");
+
+router.use(rateLimiter)
 
 router.post(
   "/",
