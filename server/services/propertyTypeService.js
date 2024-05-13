@@ -6,6 +6,7 @@ const jwt = require("jsonwebtoken")
 const Sequelize = require('sequelize')
 const bcrypt = require("bcrypt")
 const { throwErrorWithStatus } = require('../middlewares/errorHandler')
+const redis = require('../config/redis.config')
 
 const createNewPropertyTypeServices = asyncHandler(async (req, res) => {
 
@@ -62,18 +63,32 @@ const getPropertyTypesServices = asyncHandler(async (req, res) => {
   }
 
   if (!limit) {
+    const alreadyGetAll = await redis.get('get-property-type')
+    if (alreadyGetAll) {
+      let propertyTypes = alreadyGetAll
 
-    const response = await db.PropertyType.findAll({
-      where: query,
-      ...options
-    })
+      return res.json({
+        error: false,
+        success: true,
+        toastMessage: "Got all propertyTypes successfully",
+        propertyTypes: JSON.parse(alreadyGetAll)
+      })
+    } else {
+      const response = await db.PropertyType.findAll({
+        where: query,
+        ...options
+      })
 
-    return res.json({
-      error: response.length > 0 ? false : true,
-      success: response.length > 0 ? true : false,
-      toastMessage: response.length > 0 ? "Got all propertyTypes successfully" : "Cannot get propertyType",
-      propertyTypes: response
-    })
+      // Lưu dữ liệu vào Redis dưới dạng chuỗi JSON
+      redis.set('get-property-type', JSON.stringify(response))
+
+      return res.json({
+        error: response.length > 0 ? false : true,
+        success: response.length > 0 ? true : false,
+        toastMessage: response.length > 0 ? "Got all propertyTypes successfully" : "Cannot get propertyType",
+        propertyTypes: response
+      })
+    }
   }
 
   //Pagination
@@ -130,11 +145,11 @@ const getPropertyTypesServices = asyncHandler(async (req, res) => {
 const updatePropertyTypesServices = asyncHandler(async (req, res, next) => {
   const { id } = req.params
 
-    // Kiểm tra xem có trường name, image, description trong req.body không
+  // Kiểm tra xem có trường name, image, description trong req.body không
   if (!req.body.name || !req.body.image || !req.body.description) {
     return throwErrorWithStatus(403, "Name, image, and description are required", res, next)
   }
-  
+
   if (Object.keys(req.body).length === 0)
     return throwErrorWithStatus(403, "Missing input", res, next)
 
