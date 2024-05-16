@@ -32,3 +32,31 @@ export const SIGN_IN = {
   LOGIN: 'LOGIN',
   REGISTER: 'REGISTER'
 }
+
+export const adminSidebar = [
+  {
+    id: 12,
+    name: 'Dashboard',
+    path: `/${paths.ADMIN_LAYOUT}/${paths.DASHBOARD}`,
+    icon: 'RiDashboardLine',
+    type: 'SINGLE'
+  },
+  {
+    id: 13,
+    name: 'Property Type',
+    icon: 'MdOutlineAddHomeWork',
+    type: 'PARENT',
+    subs: [
+      {
+        id: 131,
+        path: `/${paths.ADMIN_LAYOUT}/${paths.CREATE_PROPERTY_TYPE}`,
+        name: 'Create new'
+      },
+      {
+        id: 132,
+        path: `/${paths.ADMIN_LAYOUT}/${paths.MANAGE_PROPERTY_TYPE}`,
+        name: 'Manage'
+      }
+    ]
+  }
+];
