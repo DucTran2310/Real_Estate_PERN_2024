@@ -30,7 +30,7 @@ const Navigation = ({ location }) => {
                 location.pathname === '/' ? '' : 'text-gray-900'
               )}
               key={el.id}
-              to={el.path}
+              to={el.path} 
             >
               {el.text}
             </NavLink>

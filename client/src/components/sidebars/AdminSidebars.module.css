@@ -1,0 +1,9 @@
+.submenu {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease-out;
+}
+
+.submenu.active {
+  max-height: 100vh; /* or any other height that fits your needs */
+}
