@@ -9,7 +9,7 @@ const validateDto = (schema) => (req, res, next) => {
     return res.status(403).json({
       error: true,
       success: false,
-      mes: error.details[0].message.replaceAll(`\"`, ""),
+      toastMessage: error.details[0].message.replaceAll(`\"`, ""),
     });
   }
   next()

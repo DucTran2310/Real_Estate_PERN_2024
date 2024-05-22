@@ -6,3 +6,10 @@ export const apiGetCurrent = (data) =>
     method: "get",
     data,
   });
+
+export const apiGetRoles = (data) =>
+  axios({
+    url: "/user/roles",
+    method: "get",
+    data,
+  });

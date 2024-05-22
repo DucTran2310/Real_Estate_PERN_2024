@@ -1,4 +1,4 @@
-import { apiGetCurrent } from '@apis/user'
+import { apiGetCurrent, apiGetRoles } from '@apis/user'
 import { create } from 'zustand'
 import { persist, createJSONStorage } from 'zustand/middleware'
 
@@ -7,6 +7,7 @@ export const useUserStore = create(
     (set) => ({
       token: null,
       current: null,
+      listRoles: [],
       setToken: (token) =>
         set(() => ({
           token,
@@ -15,6 +16,16 @@ export const useUserStore = create(
         const response = await apiGetCurrent()
         if (response.success) {
           return set(() => ({ current: response?.currentUser }))
+        } else {
+          return set(() => ({ current: null, token: null }))
+        }
+      },
+      getRoles: async () => {
+        const response = await apiGetRoles()
+        if (response.success) {
+          return set(() => ({ listRoles: response?.listRoles }))
+        } else {
+          return set(() => ({ listRoles: [] }))
         }
       }
     }),
@@ -26,7 +37,6 @@ export const useUserStore = create(
         Object.fromEntries(
           Object.entries(state).filter(el => el[0] === 'token' || el[0] === 'current')
         )
-
     },
   ),
 )

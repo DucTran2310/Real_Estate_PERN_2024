@@ -25,3 +25,11 @@ Content-Type: application/json
 {
   "uid": 10
 }
+
+### GET ROLES
+GET http://localhost:5001/api/user/roles
+Content-Type: application/json
+
+### INSERT ROLE
+POST http://localhost:5001/api/insert/roles
+Content-Type: application/json

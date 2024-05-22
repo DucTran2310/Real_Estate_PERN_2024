@@ -8,4 +8,9 @@ router.get(
   userController.getUserCurrent
 ) 
 
+router.get(
+  '/roles', 
+  userController.getRoles
+) 
+
 module.exports = router

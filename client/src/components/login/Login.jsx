@@ -16,7 +16,7 @@ const Login = () => {
   const [variant, setVariant] = useState(SIGN_IN.LOGIN)
   const { register, formState: { errors }, handleSubmit, reset } = useForm()
   const { setModal, setLoading, isLoading } = useAppStore()
-  const { token, setToken } = useUserStore()
+  const { setToken, listRoles } = useUserStore()
 
   useEffect(() => {
     reset()
@@ -57,8 +57,6 @@ const Login = () => {
       }
     }
   }
-
-  console.log('VVVTOKEN: ', token)
 
   return (
 
@@ -130,14 +128,13 @@ const Login = () => {
             <InputRadio
               label="Type account"
               register={register}
-              id="role"
+              id="roleCode"
               validate={{ required: "This field cannot empty." }}
               optionClassname="grid grid-cols-3 gap-4"
               errors={errors}
-              options={[
-                { label: 'User', value: 'USER' },
-                { label: 'Agent', value: 'AGENT' }
-              ]}
+              options={listRoles
+                ?.filter(el => el.code !== 'ROL1')
+                ?.map(el => ({ label: el.value, value: el.code }))}
             />
           )}
           <Button

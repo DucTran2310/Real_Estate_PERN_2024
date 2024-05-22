@@ -12,10 +12,11 @@ import { AdminLayout, CreatePropertyType, Dashboard, ManagePropertyType } from '
 function App() {
 
   const { isShowModal } = useAppStore()
-  const { getCurrent, token } = useUserStore()
+  const { getCurrent, token, getRoles } = useUserStore()
 
   useEffect(() => {
     getCurrent()
+    getRoles()
   }, [token])
 
   return (
