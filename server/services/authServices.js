@@ -18,8 +18,23 @@ const registerUser = asyncHandler(async (req, res) => {
   //handle logic
   const response = await db.User.findOrCreate({
     where: { phone: phone },
-    defaults: req.body
+    defaults: {
+      phone, password, name
+    }
   })
+
+  const userId = response[0]?.id
+  if (userId) {
+    const roleCode = ['ROL7']
+    if (req.body?.roleCode) {
+      roleCode.push(req.body?.roleCode)
+    }
+    const roleCodeBulk = roleCode.map((role) => ({ userId, roleCode: role }))
+    const updateRole = await db.User_Role.bulkCreate(roleCodeBulk)
+    if (!updateRole) {
+      await db.User.destroy({ where: { id: userId } })
+    }
+  }
 
   return res.json({
     error: response[1] ? false : true,

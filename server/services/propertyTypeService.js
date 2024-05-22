@@ -148,7 +148,7 @@ const removePropertyTypesServices = asyncHandler(async (req, res) => {
   return res.json({
     error: response > 0 ? false : true,
     success: response > 0,
-    mes: response > 0 ? "Deleted successfully" : "No data is delete",
+    toastMessage: response > 0 ? "Deleted successfully" : "No data is delete",
   })
 })
 
