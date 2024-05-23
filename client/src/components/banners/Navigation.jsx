@@ -41,7 +41,7 @@ const Navigation = ({ location }) => {
             className={
               twMerge(clsx(location.pathname === '/' && 'bg-transparent border-main-100 border'))
             }
-            onClick={() => setModal(true, <Login />)}
+            handleOnClick={() => setModal(true, <Login />)}
           >
             Sign in
           </Button>

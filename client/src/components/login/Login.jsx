@@ -139,7 +139,7 @@ const Login = () => {
           )}
           <Button
             className="py-2 my-6"
-            onClick={handleSubmit(onSubmit)}
+            handleOnClick={handleSubmit(onSubmit)}
           >
             {variant === SIGN_IN.LOGIN ? SIGN_IN.LOGIN : SIGN_IN.REGISTER}
           </Button>
