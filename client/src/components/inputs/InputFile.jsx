@@ -4,10 +4,10 @@ import { twMerge } from "tailwind-merge";
 import { FaCloudUploadAlt } from "react-icons/fa";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-// import { apiUploadImages } from "~/apis/beyond";
 import { ImSpinner7 } from "react-icons/im";
 import { AiFillCloseCircle } from "react-icons/ai";
 import { toast } from "react-toastify";
+import { apiUploadImages } from "@apis/beyond";
 
 const InputFile = ({
   containerClassname,
@@ -17,6 +17,7 @@ const InputFile = ({
   multiple,
   getImages,
   errors,
+  resetImages
 }) => {
 
   const { register, watch } = useForm()
@@ -25,30 +26,32 @@ const InputFile = ({
   const [isLoading, setIsLoading] = useState(false)
 
   const handleUpload = async (files) => {
-    // const formData = new FormData()
-    // setIsLoading(true)
-    // const uploadPromises = []
-    // for (let file of files) {
-    //   formData.append("file", file)
-    //   formData.append(
-    //     "upload_preset",
-    //     import.meta.env.VITE_CLOUDINARY_UPLOAD_PRESET
-    //   );
-    //   uploadPromises.push(apiUploadImages(formData))
-    // }
-    // const response = await Promise.all(uploadPromises)
-    // setIsLoading(false);
-    // if (response && response.length > 0) {
-    //   const tempArrImage = [];
-    //   for (let result of response) {
-    //     if (result.status === 200)
-    //       tempArrImage.push({
-    //         id: result.data.public_id,
-    //         path: result.data.secure_url,
-    //       });
-    //   }
-    //   setImages(tempArrImage);
-    // } else toast.error("Something went wrong")
+    const uploadPromises = []
+    setIsLoading(true)
+
+    for (let file of files) {
+      const formData = new FormData()
+      formData.append("file", file)
+      formData.append(
+        "upload_preset",
+        import.meta.env.VITE_CLOUDINARY_UPLOAD_PRESET
+      )
+      uploadPromises.push(apiUploadImages(formData))
+    }
+
+    try {
+      const responses = await Promise.all(uploadPromises)
+      const tempArrImage = responses.map(result => ({
+        id: result.public_id,
+        path: result.secure_url,
+      }))
+      setImages(tempArrImage)
+      setIsLoading(false)
+    } catch (error) {
+      console.error('Error uploading images:', error)
+      setIsLoading(false)
+      toast.error("Something went wrong")
+    }
   }
 
   useEffect(() => {
@@ -60,6 +63,12 @@ const InputFile = ({
   useEffect(() => {
     getImages(images)
   }, [images])
+
+  useEffect(() => {
+    if (resetImages) {
+      setImages([])
+    }
+  }, [resetImages])
 
   const handleDeleteImage = (e, imageId) => {
     e.preventDefault()
@@ -112,7 +121,7 @@ const InputFile = ({
               <FaCloudUploadAlt />
             </span>
             <small className="text-gray-300 italic">
-              Only support image with extension PNG ,JPG ,JPEG
+              Only support image with extension PNG, JPG, JPEG
             </small>
           </>
         )}
