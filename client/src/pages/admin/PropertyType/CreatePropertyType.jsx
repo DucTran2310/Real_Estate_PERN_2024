@@ -1,6 +1,9 @@
+import { apiCreateNewPropertyType } from "@apis/propertyTypes"
 import { Button, InputFile, InputForm, TextArea, Title } from "@components/index"
+import { useState } from "react"
 import { useForm } from "react-hook-form"
 import { FaRegPlusSquare } from "react-icons/fa"
+import { toast } from "react-toastify"
 
 const CreatePropertyType = () => {
 
@@ -9,23 +12,42 @@ const CreatePropertyType = () => {
     formState: { errors },
     setValue,
     handleSubmit,
-    // reset,
-    clearErrors
+    reset,
+    clearErrors,
+    setError
   } = useForm()
 
-  const handleCreateNewPropertyType = (data) => {
-    console.log('VVVDATA: ', data)
+  const [resetImages, setResetImages] = useState(false)
+
+  const handleCreateNewPropertyType = async (data) => {
+
+    if(!data.images || data.images.length === 0) {
+      setError('images', {
+        message: "This field cannot empty",
+        type: "required"
+      })
+    } else {
+      const {images, ...payload} = data
+      const response = await apiCreateNewPropertyType({...payload, image: images[0]})
+
+      if (response.success) {
+        toast.success(response.toastMessage)
+        reset()
+        getImages([])
+        setResetImages((prev) => !prev)
+      } else toast.error(response.toastMessage)
+    }
   }
 
   const getImages = (images) => {
     if (images && images.length > 0) {
-      clearErrors("images");
+      clearErrors("images")
     }
     setValue(
       "images",
       images?.map((el) => el.path)
-    );
-  };
+    )
+  }
 
   return (
     <div className="">
@@ -58,6 +80,7 @@ const CreatePropertyType = () => {
           label="Image"
           // multiple={true}
           getImages={getImages}
+          resetImages={resetImages}
         />
       </form>
     </div>
