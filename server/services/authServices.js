@@ -8,10 +8,6 @@ const { throwErrorWithStatus } = require('../middlewares/errorHandler')
 
 // async function registerUser(userData) 
 const registerUser = asyncHandler(async (req, res) => {
-  // password, phone, name, role = [USER, AGENT, ADMIN]
-  // client = urlencoded || formdata => req.body
-  // client = params (?=adstar) => req.query
-  // client api/user/:id => req.params
 
   const { password, phone, name, role } = req.body
 
@@ -19,13 +15,15 @@ const registerUser = asyncHandler(async (req, res) => {
   const response = await db.User.findOrCreate({
     where: { phone: phone },
     defaults: {
-      phone, password, name
+      phone, 
+      password, 
+      name
     }
   })
 
   const userId = response[0]?.id
   if (userId) {
-    const roleCode = ['ROL7']
+    const roleCode = ['ROL1'] //Admin
     if (req.body?.roleCode) {
       roleCode.push(req.body?.roleCode)
     }

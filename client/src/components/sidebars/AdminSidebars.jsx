@@ -3,9 +3,10 @@ import { adminSidebar } from '@utils/constants'
 import { renderIcon } from '@utils/rendericon'
 import clsx from 'clsx'
 import { Fragment, useState } from 'react'
-import { NavLink } from 'react-router-dom'
+import { Link, NavLink } from 'react-router-dom'
 import { FaChevronDown, FaChevronRight } from "react-icons/fa"
 import './AdminSidebars.module.css'
+import { RiShareForwardLine } from 'react-icons/ri'
 
 const AdminSidebars = () => {
 
@@ -82,6 +83,15 @@ const AdminSidebars = () => {
             </Fragment>
           ))
         }
+        <Link
+          className={clsx('flex items-center gap-2 hover:bg-main-700 hover:border-r-4 border-orange-700 px-4 py-3',)}
+          to={'/'}
+        >
+          <span className='text-2xl'>
+            <RiShareForwardLine />
+          </span>
+          <span className='select-none'>Go homepage</span>
+        </Link>
       </div>
     </div>
   )
