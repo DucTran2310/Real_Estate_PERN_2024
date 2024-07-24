@@ -1,4 +1,4 @@
-const { faker, fa } = require("@faker-js/faker");
+const { faker } = require("@faker-js/faker");
 const bcrypt = require("bcrypt");
 const hashPassword = (pwd) => bcrypt.hashSync(pwd, bcrypt.genSaltSync(10));
 
@@ -39,7 +39,7 @@ module.exports = {
       allowSpecialCharacters: false,
     }),
     address: faker.location.streetAddress({ useFullAddress: true }),
-    password: hashPassword("123456"),
+    password: hashPassword("12345"),
     avatar: faker.image.avatar(),
     createdAt: new Date(),
     updatedAt: new Date(),
@@ -145,7 +145,6 @@ module.exports = {
       createdAt: new Date(),
       updatedAt: new Date(),
     },
-
     {
       name: "Furnace",
       image: faker.image.urlLoremFlickr({ category: "furnace" }),

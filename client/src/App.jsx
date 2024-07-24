@@ -8,6 +8,7 @@ import { Modal } from './components'
 import { useUserStore } from '@store/useUserStore'
 import { useEffect } from 'react'
 import { AdminLayout, CreatePropertyType, Dashboard, ManagePropertyType } from '@pages/admin'
+import { PersonalLayout, UserLayout } from '@pages/user'
 
 function App() {
 
@@ -33,9 +34,19 @@ function App() {
 
         {/* admin routes */}
         <Route path={path.ADMIN_LAYOUT} element={<AdminLayout />}>
-          <Route path={path.DASHBOARD} element={<Dashboard />} />
+          <Route path={path.ADMIN_DASHBOARD} element={<Dashboard />} />
           <Route path={path.CREATE_PROPERTY_TYPE} element={<CreatePropertyType />} />
           <Route path={path.MANAGE_PROPERTY_TYPE} element={<ManagePropertyType />} />
+        </Route>
+
+        {/* user routes */}
+        <Route path={path.USER_LAYOUT} element={<UserLayout />}>
+          <Route path={path.PERSONAL} element={<PersonalLayout />} />
+        </Route>
+
+        {/* agent routes */}
+        <Route path={path.AGENT_LAYOUT} element={<UserLayout />}>
+          <Route path={path.AGENT_DASHBOARD} element={<Dashboard />} />
         </Route>
       </Routes>
       <ToastContainer
