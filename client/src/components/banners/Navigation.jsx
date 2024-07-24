@@ -17,7 +17,7 @@ const Navigation = ({ location }) => {
   const { setModal } = useAppStore()
 
   return (
-    <div className="w-full bg-transparent flex items-center justify-between fixed z-50 top-[85px] px-[100px] py-[26px]">
+    <div className="w-full bg-transparent flex items-center justify-between fixed z-10 top-[85px] px-[100px] py-[26px]">
       <Link to="/">
         <img src={logo} alt="logo" className="object-contain" />
       </Link>

@@ -20,8 +20,6 @@ const Login = ({ navigate }) => {
   const [isShowConfirmOTP, setIsShowConfirmOTP] = useState(false);
   const { setToken, listRoles } = useUserStore();
 
-  console.log('VVVroles: ', listRoles)
-
   const {
     register,
     formState: { errors },
@@ -119,7 +117,7 @@ const Login = ({ navigate }) => {
         </div>
       )}
       <h1 className="text-3xl font-Agbalumo font-semibold tracking-tight">
-        Welcome to Soul Rest
+        Welcome to Real Estate
       </h1>
       <div
         className={twMerge(

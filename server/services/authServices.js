@@ -23,7 +23,7 @@ const registerUser = asyncHandler(async (req, res) => {
 
   const userId = response[0]?.id
   if (userId) {
-    const roleCode = ['ROL1'] //Admin
+    const roleCode = ['ROL7'] //Customer
     if (req.body?.roleCode) {
       roleCode.push(req.body?.roleCode)
     }

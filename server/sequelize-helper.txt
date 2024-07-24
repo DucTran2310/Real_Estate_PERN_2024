@@ -2,9 +2,3 @@ npx sequelize-cli model:generate --name User --attributes firstName:string,lastN
 npx sequelize-cli db:migrate
 
 npx sequelize migration:create --name Users
-
-Các mốc level tham khảo cho giá Vàng
-
-Support levels: 2,291.20 2,276.50 2,260.30
-
-Resistance levels: 2,310.50 2,326.50 2,341.05

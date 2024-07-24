@@ -27,7 +27,8 @@ export const useUserStore = create(
         } else {
           return set(() => ({ listRoles: [] }))
         }
-      }
+      },
+      logout: () => set(() => ({token: null, current: null}))
     }),
     {
       name: 'user-storage', // name of the item in the storage (must be unique)
